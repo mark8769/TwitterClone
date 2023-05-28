@@ -1,24 +1,35 @@
-{% extends "network/layout.html" %}
+{% extends "mail/layout.html" %}
+{% load static %}
 
 {% block body %}
 
-    <h2>Login</h2>
-
     {% if message %}
-        <div>{{ message }}</div>
+    <div class="alert alert-primary">{{ message }}</div>
     {% endif %}
-
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
+    <div class="login-container">
+        <div id="login-form">
+            <h2 class="centered-text">Login</h2>
+            <hr>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <!-- https://www.w3schools.com/howto/howto_css_form_icon.asp -->
+                <!-- https://www.w3schools.com/icons/fontawesome_icons_intro.asp -->
+                <div class="form-group icon-container">
+                    <!-- Font awesome works, but lets try without it -->
+                    <!-- <i class="fa-solid fa-user custom-icon"></i> -->
+                    <img src="{% static 'mail/user-16-16.png' %}" class="custom-icon">
+                    <input autofocus class="form-control" type="email" name="email" placeholder="Email">
+                </div>
+                <div class="form-group icon-container">
+                    <!-- <i class="fa-solid fa-lock custom-icon"></i> -->
+                    <img src="{% static 'mail/key.png' %}" class="custom-icon">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                </div>
+                <input class="btn btn-primary" type="submit" value="Login">
+            </form>
+            <hr>
+            <p class="centered-text">Don't have an account? <a href="{% url 'register' %}">Register here.</a></p>
         </div>
-        <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
-        </div>
-        <input class="btn btn-primary" type="submit" value="Login">
-    </form>
-
-    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    </div> 
 
 {% endblock %}
