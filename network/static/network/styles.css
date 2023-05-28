@@ -84,11 +84,12 @@ img{
 
 }
 .login-container{
+    padding-top: 65px;
     display: flex;
     justify-content: center;
     flex-direction: column;
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
 }
 /* Set icon and input next to each other using flexbox. */
 .icon-container{
