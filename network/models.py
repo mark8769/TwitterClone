@@ -27,7 +27,7 @@ class Like(models.Model):
         return s
 
 # class Following(models.Model):
-#     
+    
 #     have to have related names since Django won't know which user to refer to which of next two variables.s
 #     user = models.ForeignKey(User, on_delete=models.CASCADE)
 #     user_being_followed = models.ForeignKey(User, on_delete=models.CASCADE)
