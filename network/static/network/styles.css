@@ -1,0 +1,136 @@
+textarea {
+    min-height: 400px;
+}
+.inbox-email{
+    display: flex;
+    display: row;
+    border: .5px black solid;
+    /* margin: 2px; */
+    max-height: 50px;
+    overflow-y: hidden;
+}
+.flex-container{
+    display: flex;
+    display: row;
+    justify-content: space-between;
+}
+span{
+    display: block;
+}
+.inbox-email > span{
+    flex-basis: 25%;
+}
+#email-line > span{
+    display: inline;
+}
+.read{
+    background-color: #f3f6fc;
+}
+#email-subject{
+    font-size: 24px;
+}
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Controlling_Ratios_of_Flex_Items_Along_the_Main_Ax */
+.side-nav{
+    flex: 1 1 0;
+    padding: 30px;
+    /* width: 20%; */
+}
+.main-content{
+    flex: 7 1 0;
+    padding: 30px;
+    /* width: 80%; */
+}
+.left-text{
+    text-align: left;
+}
+#back-button{
+    /* Remove button styling and use image only. */
+    background: none;
+	border: none;
+	cursor: pointer;
+}
+.flex-header{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 15px;
+}
+.flex-header > div{
+    margin-top: auto;
+}
+/* .flex-header:last-child {
+    margin-left: auto;
+} */
+#user{
+    margin-left: auto;
+}
+.medium{
+    width: 100%;
+}
+img{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.button-color{
+    background-color: #c1e6ff;
+}
+#search{
+    width: 40%;
+    margin-right: auto;
+    margin-left: auto;
+    /* border-radius: 10px; */
+    border: .5px solid black;
+    border-radius: 10px;
+    padding-left: 20px;
+
+}
+.login-container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+/* Set icon and input next to each other using flexbox. */
+.icon-container{
+    display: flex;
+}
+/* Set padding the same for image and input (align). Image is not inside input.... */
+.icon-container > input{
+    padding: 10px;
+}
+.custom-icon{
+    background: #ededed;
+    padding: 10px;
+    margin-right: 0px;
+    border-radius: 5px;
+}
+/* */
+#login-form{
+    height: 400px;
+    width: 350px;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Aligning_Items_in_a_Flex_Container */
+    /* align-self is used for individual flex-items */
+    align-self: center;
+    /* Looks a bit off when completely in the middle. */
+    margin-bottom: 20%;
+    box-shadow: 1px 3px 10px #888888;
+    padding: 30px;
+}
+input.btn {
+    width: 100%;
+}
+.centered-text{
+    text-align: center;
+}
+/* .inbox-email:nth-child(1){
+    flex-grow: 1;
+}
+.inbox-email:nth-child(2){
+    flex-grow: 5;
+}
+.inbox-email:nth-child(3){
+    flex-grow: 5;
+}
+.inbox-email:nth-child(4){
+    flex-grow: 1;
+} */
