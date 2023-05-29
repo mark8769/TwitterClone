@@ -15,6 +15,15 @@ class Post(models.Model):
         s += f"time: {self.datetime}"
 
         return s
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": self.user.id,
+            "datetime": self.datetime,
+            "content": self.content
+        }
+
 
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
