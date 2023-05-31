@@ -6,7 +6,8 @@ function main(){
 
 }
 function loadPosts(){
-
+    getPosts();
+    
 }
 
 function addEventListeners(){
