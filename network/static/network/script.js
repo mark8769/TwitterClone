@@ -1,18 +1,20 @@
 $(main);
 
 function main(){
-    addEventListeners();
     loadPosts();
+    addEventListeners();
 
 }
 function loadPosts(){
     getPosts();
 }
-
 function addEventListeners(){
     $("#postButton").click(postHandler);
 }
-
+function profileHandler(){
+    console.log("clicked on profile");
+    window.open("http://localhost:8000/profile", target="_self");
+}
 // Pass in user, pass in postContent for fetch request.
 function postHandler(){
     // Why do some elements let you access via html, and some through html?
@@ -34,13 +36,16 @@ function postHandler(){
     .then(response => console.log(response))
     // .then(result => console.log(result))
 }
+function addPostHandlers(){
+    $(".user").click(profileHandler);
+}
 function displayPosts(posts){
     console.log("displaying all posts");
     let $homePage = $("#all-posts-view");
     let htmlBuilder = '';
     // console.log(posts);
     posts.forEach(element => {
-        let user = `<div>${element.username}</div`;
+        let user = `<div class="user" id=${element.username}>${element.username}</div>`;
         let datetime = `<div>${element.datetime}</div>`;
         let content = `<div>${element.content}</div>`;
         let build = user + datetime + content;
@@ -48,6 +53,7 @@ function displayPosts(posts){
         console.log(element);
     });
     $homePage.html(htmlBuilder);
+    addPostHandlers();
 }
 function getPosts(){
     console.log("getting all posts");
