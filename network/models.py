@@ -3,6 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
+    # We have username, email, hashed password.
     pass
 
 class Post(models.Model):
@@ -19,6 +20,7 @@ class Post(models.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "username": self.user.username,
             "user": self.user.id,
             "datetime": self.datetime,
             "content": self.content
