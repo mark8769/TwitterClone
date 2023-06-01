@@ -95,6 +95,8 @@ def post(request):
         return JsonResponse({"response": "Success"}, status=201)
 
 def user_posts(request):
-
     users_posts = Post.objects.filter(user=request.user)
     return JsonResponse([post.serialize for post in users_posts], safe=False)
+
+def profile(request):
+    return render(request, "network/profile.html")
