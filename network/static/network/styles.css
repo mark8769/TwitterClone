@@ -123,6 +123,9 @@ input.btn {
 .centered-text{
     text-align: center;
 }
+.user{
+    font-weight: bold;
+}
 /* .inbox-email:nth-child(1){
     flex-grow: 1;
 }
