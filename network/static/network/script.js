@@ -1,13 +1,12 @@
 $(main);
 
 function main(){
-    console.log("Hello");
     addEventListeners();
+    loadPosts();
 
 }
 function loadPosts(){
     getPosts();
-    
 }
 
 function addEventListeners(){
@@ -35,9 +34,27 @@ function postHandler(){
     .then(response => console.log(response))
     // .then(result => console.log(result))
 }
-
+function displayPosts(posts){
+    console.log("displaying all posts");
+    let $homePage = $("#all-posts-view");
+    let htmlBuilder = '';
+    // console.log(posts);
+    posts.forEach(element => {
+        let user = `<div>${element.username}</div`;
+        let datetime = `<div>${element.datetime}</div>`;
+        let content = `<div>${element.content}</div>`;
+        let build = user + datetime + content;
+        htmlBuilder += `<div>${build}</div>`;
+        console.log(element);
+    });
+    $homePage.html(htmlBuilder);
+}
 function getPosts(){
+    console.log("getting all posts");
     fetch("/post")
-    .then(response => response.json)
-    .then(result => console.log(result))
+    .then(response => response.json())
+    .then(results => {
+        // console.log(results);
+        displayPosts(results);
+    })
 }
