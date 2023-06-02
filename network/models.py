@@ -7,7 +7,7 @@ class User(AbstractUser):
     pass
 
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="user_posts")
     datetime = models.DateTimeField(auto_now_add=True)
     content = models.TextField()
 
@@ -28,8 +28,10 @@ class Post(models.Model):
 
 
 class Like(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    # https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
+    likeState = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
         s = f"User: {self.user}"
