@@ -98,5 +98,24 @@ def user_posts(request):
     users_posts = Post.objects.filter(user=request.user)
     return JsonResponse([post.serialize for post in users_posts], safe=False)
 
-def profile(request):
-    return render(request, "network/profile.html")
+def profile(request, username):
+    # get # of followers
+    # get # of people that user follows
+    # get all users posts in reverse chronological order
+    # display follow/unfollow for anyone signed in (html/css/javascript)
+    user = User.objects.get(username=username)
+    # https://mrprabhatmishra.medium.com/how-to-use-related-name-attribute-in-django-model-db6c7d8d20cf
+    # get all the posts the user has made. (take advantage of related name)
+    user_posts = user.user_posts.all().order_by("-datetime").all()
+    # user_posts = user_posts.order_by("-datetime").all()
+
+    return render(request, "network/profile.html",{
+        "posts": user_posts
+    })
+
+def like(request, post_id):
+
+    pass
+
+def dislike(request, post_id):
+    pass
