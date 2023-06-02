@@ -5,5 +5,12 @@
     <!-- Return context from views.py -->
     Profile
     <div id="user-posts-view">
+        {% for post in posts %}
+            <div>
+                <div>{{ post.user.username }}</div>
+                <div>{{ post.datetime }}</div> 
+                <div>{{ post.content}}</div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
