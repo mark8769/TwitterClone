@@ -6,7 +6,9 @@ from django.urls import reverse
 
 import json
 from django.http import JsonResponse
-from django.views.decorators.csrf import csrf_exempt
+from django.core.exceptions import ObjectDoesNotExist
+# Not needed since we are passsing in the csrf token in the javascript fetch call now.
+# from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from .models import User, Post, Like
 
@@ -115,7 +117,37 @@ def profile(request, username):
 
 def like(request, post_id):
 
+    # Only logged in users can use this route, should I use the decorator?
+
+    user_who_liked = User.objects.get(user=request.user)
+    liked_post = Post.objects.get(id=post_id)
+    try:
+        post = Like.objects.filter(user=request.user, post=liked_post)
+    except ObjectDoesNotExist:
+        post = Like.create(user=request.user, post=liked_post)
+
+    if post.like_state:
+        post.like_state = None
+    else:
+        post.like_state = True
     pass
 
 def dislike(request, post_id):
+
+    user_who_disliked = User.objects.get(user=request.user)
+    disliked_post = Post.objects.get(id=post_id)
+
+    try:
+        like = Like.objects.filter(user=user_who_disliked, post=disliked_post)
+        if not like.like_state:
+            like.like_state = None
+        else:
+            like.like_state = False
+
+        post.like_state = False
+    except ObjectDoesNotExist:
+        like = Like.objects.create(user=user_who_disliked, post=disliked_post)
+        post.like_state = False
+
+
     pass
