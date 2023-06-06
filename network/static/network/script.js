@@ -49,9 +49,31 @@ function addPostHandlers(){
 }
 function like(){
     console.log('like button clicked');
+    let parentButtonContainer = this.parentNode;
+    let post_id = parentButtonContainer.id;
+    let csrftoken = Cookies.get('csrftoken');
+    fetch(`http://localhost:8000/like/${post_id}`,{
+        "method":"PUT",
+        "body": JSON.stringify({
+            "like_state": true
+        }),
+        headers: { "X-CSRFToken": csrftoken }
+    })
+    .then(console.log("like sent to server"))
 }
 function dislike(){
     console.log("dislike button clicked");
+    let parentButtonContainer = this.parentNode;
+    let post_id = parentButtonContainer.id;
+    let csrftoken = Cookies.get('csrftoken');
+    fetch(`http://localhost:8000/dislike/${post_id}`,{
+        "method":"PUT",
+        "body": JSON.stringify({
+            "like_state": false
+        }),
+        headers: {"X-CSRFToken": csrftoken}
+    })
+    .then(console.log("dislike sent to server"))
 }
 function displayPosts(posts){
     console.log("displaying all posts");

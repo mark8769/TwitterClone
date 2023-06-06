@@ -118,36 +118,48 @@ def profile(request, username):
 def like(request, post_id):
 
     # Only logged in users can use this route, should I use the decorator?
-
-    user_who_liked = User.objects.get(user=request.user)
-    liked_post = Post.objects.get(id=post_id)
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=post_id)
+    # Try to create an instance of Like if it exists.
     try:
-        post = Like.objects.filter(user=request.user, post=liked_post)
+        like = Like.objects.get(user=request.user, post=post)
     except ObjectDoesNotExist:
-        post = Like.create(user=request.user, post=liked_post)
+        like = Like.objects.create(user=request.user, post=post)
 
-    if post.like_state:
-        post.like_state = None
+    if like.like_state:
+        like.like_state = None
     else:
-        post.like_state = True
-    pass
+        like.like_state = True
+
+    like.save(update_fields=["like_state"])
+
+    return render(request, "network/profile.html",{
+        "posts": user_posts
+    })
 
 def dislike(request, post_id):
 
-    user_who_disliked = User.objects.get(user=request.user)
-    disliked_post = Post.objects.get(id=post_id)
+    user = User.objects.get(id=request.user.id)
+    post = Post.objects.get(id=post_id)
 
     try:
-        like = Like.objects.filter(user=user_who_disliked, post=disliked_post)
+        # TODO: What is the difference between using request.user and user?
+        # TODO: What does .get return, and what does filter return? 
+        # I would assume the Like object with filter, but for some reason I get a query set
+        # with get I get what I expect?
+        like = Like.objects.get(user=request.user, post=post)
         if not like.like_state:
             like.like_state = None
         else:
             like.like_state = False
+        like.like_state = False
 
-        post.like_state = False
     except ObjectDoesNotExist:
-        like = Like.objects.create(user=user_who_disliked, post=disliked_post)
-        post.like_state = False
+        like = Like.objects.create(user=user, post=post)
+        like.like_state = False
 
-
-    pass
+    like.save(update_fields=["like_state"])
+    
+    return render(request, "network/profile.html",{
+        "posts": user_posts
+    })

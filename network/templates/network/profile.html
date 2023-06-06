@@ -1,9 +1,13 @@
 {% extends "network/layout.html" %}
-
+{% load static %}
+{% block scripts %}
+<script type="text/javascript" src="{% static 'network/profile.js' %}"></script>
+{% endblock %}
 {% block body %}
     <!-- TODO -->
     <!-- Return context from views.py -->
     Profile
+    <button id="followButton" name="{{ post.user.username }}">Follow</button>
     <div id="user-posts-view">
         {% for post in posts %}
             <div>

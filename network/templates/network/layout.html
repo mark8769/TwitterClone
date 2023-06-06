@@ -10,6 +10,8 @@
         <!-- Library to get csrf token. Could alternatively use the csrf token exempt. (but that would be bad practice at a job) -->
         <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
         <script type="text/javascript" src="{% static 'network/script.js' %}"></script>
+        {% block scripts %}
+        {% endblock %}
     </head>
     <body>
 
