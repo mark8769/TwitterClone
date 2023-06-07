@@ -39,8 +39,14 @@ class Like(models.Model):
 
         return s
 
-# class Following(models.Model):
+class Following(models.Model):
     
-#     have to have related names since Django won't know which user to refer to which of next two variables.s
-#     user = models.ForeignKey(User, on_delete=models.CASCADE)
-#     user_being_followed = models.ForeignKey(User, on_delete=models.CASCADE)
+    # have to have related names since Django won't know which user to refer to which of next two variables.s
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
+    user_being_followed = models.ForeignKey(User, on_delete=models.CASCADE)
+    follow_state = models.BooleanField(blank=True, null=True)
+
+    def __str__(self):
+        s = f"User: {self.user}"
+        s += f"Post: {self.user_being_followed}"
+        s += f"Following: {self.follow_state}"
