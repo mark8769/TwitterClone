@@ -163,3 +163,9 @@ def dislike(request, post_id):
     return render(request, "network/profile.html",{
         "posts": user_posts
     })
+
+
+def follow(request, username):
+
+    
+    return render(request, "network/profile.html")
