@@ -92,7 +92,7 @@ function displayPosts(posts){
         let cont = buttonContainer + button + dbutton + closeButtonContainer;
         let build = user + datetime + content + cont;
         htmlBuilder += `<div>${build}</div>`;
-        console.log(element);
+        // console.log(element);
     });
     $homePage.html(htmlBuilder);
     addPostHandlers();
