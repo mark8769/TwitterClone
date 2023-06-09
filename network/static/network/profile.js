@@ -1,9 +1,19 @@
 $(main);
 
 function main(){
-    $("#followButton").click(follow);
+    $("#followButton").click(followHandler);
+    $("#unfollowButton").click(followHandler);
 }
-function follow(){
+function followHandler(){
+    // Check which button was pressed.
+    console.log("inside followHandler");
+    // console.log(this.id == "followButton");
+    // console.log(this.id);
+    if (this.id == "followButton"){
+        var shouldFollow = true
+    }else{
+        var shouldFollow = false
+    }
     let username = $("#username").html();
     let urlName = document.URL;
     let splitUrl = urlName.split("/");
@@ -17,10 +27,21 @@ function follow(){
     fetch(endpoint,{
         method: "PUT",
         body: JSON.stringify({
-            isFollowing: true
+            isFollowing: shouldFollow
         }),
         headers: { "X-CSRFToken": csrftoken }
     })
     .then(response => response.json)
-    .then(result => console.log(result))
+    .then(result => {
+        // console.log(result);
+        if (shouldFollow){
+            console.log("hiding stuff");
+            $("#follow").attr("hidden", "");
+            $("#unfollow").removeAttr("hidden");
+        }else{
+            console.log("unhiding stuff");
+            $("#unfollow").attr("hidden", "");
+            $("#follow").removeAttr("hidden");
+        }
+    });
 }
