@@ -10,7 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 # Not needed since we are passsing in the csrf token in the javascript fetch call now.
 # from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .models import User, Post, Like
+from .models import User, Post, Like, Following
 
 
 def index(request):
@@ -111,8 +111,23 @@ def profile(request, username):
     user_posts = user.user_posts.all().order_by("-datetime").all()
     # user_posts = user_posts.order_by("-datetime").all()
 
+    # Get current user if they are authenticated.
+    if user.is_authenticated:
+        curr_user = User.objects.get(id=request.user.id)
+        # Give correct context for profile page.
+        # Denote whether user is following them.
+        try:
+            follow = Following.objects.get(user=curr_user,user_being_followed=user)
+            if follow.follow_state is None:
+                is_following = False
+            else:
+                is_following = follow.follow_state
+        except ObjectDoesNotExist:
+            is_following = False
+
     return render(request, "network/profile.html",{
-        "posts": user_posts
+        "posts": user_posts,
+        "is_following": is_following
     })
 
 def like(request, post_id):
@@ -167,5 +182,30 @@ def dislike(request, post_id):
 
 def follow(request, username):
 
-    
+    user = User.objects.get(id=request.user.id)
+    following = User.objects.get(id=request.user.id)
+
+    # Try to instantiate Follow if it already exists in database.
+    try:
+        follow = Following.objects.get(user=user, user_being_followed=following)
+        if request.method == "POST":
+            getContext = follow.follow_state
+            follow.follow_state = False
+    except ObjectDoesNotExist:
+        follow = Following.objects.create(user=user, user_being_followed=following)
+        if request.method == "POST":
+            follow.follow_state = True
+    finally:
+        # Save the new follow state.
+        if request.method == "POST":
+            follow.save(update_fields=["like_state"])
+
+    # TODO: do a reverse to profile route?
     return render(request, "network/profile.html")
+    # Return context for follow button.
+    # TODO: Instead of checking if following, return some context stating only logged in users can follow someone.
+    # TODO: Maybe not. If we do it that way, then we will get a full reload of the page. We only want to update the follow button. Return a success json response?
+    # TODO: Maybe do this when loading the profile page?
+    # return render(request, "network/profile.html",{
+    #     "isFollowing": follow.follow_state
+    # })
