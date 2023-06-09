@@ -7,7 +7,21 @@
     <!-- TODO -->
     <!-- Return context from views.py -->
     Profile
-    <button id="followButton" name="{{ post.user.username }}">Follow</button>
+    {% if is_following %}
+    <div id="unfollow">
+        <button id="unfollowButton" name="{{ post.user.username }}">Unfollow</button>
+    </div>
+    <div id="follow" hidden>
+        <button id="followButton" name="{{ post.user.username }}">Follow</button>
+    </div>
+    {% else %}
+    <div id="unfollow" hidden>
+        <button id="unfollowButton" name="{{ post.user.username }}">Unfollow</button>
+    </div>
+    <div id="follow">
+        <button id="followButton" name="{{ post.user.username }}">Follow</button>
+    </div>
+    {% endif %}
     <div id="user-posts-view">
         {% for post in posts %}
             <div>
