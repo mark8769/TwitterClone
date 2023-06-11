@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+# https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
 
 
 class User(AbstractUser):
@@ -26,11 +27,9 @@ class Post(models.Model):
             "content": self.content
         }
 
-
 class Like(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="likes")
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    # https://stackoverflow.com/questions/8609192/what-is-the-difference-between-null-true-and-blank-true-in-django
     like_state = models.BooleanField(blank=True, null=True)
 
     def __str__(self):
@@ -40,13 +39,13 @@ class Like(models.Model):
         return s
 
 class Following(models.Model):
-    
-    # have to have related names since Django won't know which user to refer to which of next two variables.s
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="followers")
-    user_being_followed = models.ForeignKey(User, on_delete=models.CASCADE)
-    follow_state = models.BooleanField(blank=True, null=True)
+    user_being_followed = models.ForeignKey(User, on_delete=models.CASCADE, related_name="following")
+    follow_state = models.BooleanField(default=False)
 
     def __str__(self):
         s = f"User: {self.user}"
         s += f"Post: {self.user_being_followed}"
         s += f"Following: {self.follow_state}"
+
+        return s
