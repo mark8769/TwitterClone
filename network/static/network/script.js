@@ -3,13 +3,13 @@ $(main);
 function main(){
     loadPosts();
     addEventListeners();
-
 }
 function loadPosts(){
     getPosts();
 }
 function addEventListeners(){
     $("#postButton").click(postHandler);
+    $("#following").click(getFollowing);
 }
 function profileHandler(){
     console.log("clicked on profile");
@@ -103,6 +103,15 @@ function getPosts(){
     .then(response => response.json())
     .then(results => {
         // console.log(results);
+        displayPosts(results);
+    })
+}
+function getFollowing(){
+    console.log("getting all following posts");
+    fetch("/following")
+    .then(response => response.json())
+    .then(results => {
+        // console.log(results)
         displayPosts(results);
     })
 }

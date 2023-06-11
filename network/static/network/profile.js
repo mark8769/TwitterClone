@@ -3,6 +3,7 @@ $(main);
 function main(){
     $("#followButton").click(followHandler);
     $("#unfollowButton").click(followHandler);
+    $("#")
 }
 function followHandler(){
     // Check which button was pressed.
@@ -14,15 +15,17 @@ function followHandler(){
     }else{
         var shouldFollow = false
     }
-    let username = $("#username").html();
+    // let username = $("#username").html();
+    // GET NAME FROM URL PATH
     let urlName = document.URL;
     let splitUrl = urlName.split("/");
     // let user = splitUrl[splitUrl.length - 1];
     let user = splitUrl.at(-1); // Bringing love to python.
     console.log(user);
-    let endpoint = `http://localhost:8000/follow/${username}`;
+    let endpoint = `http://localhost:8000/follow/${user}`;
     let csrftoken = Cookies.get("csrftoken")
-    console.log("following " + username)
+    console.log("following " + user)
+    console.log(shouldFollow)
 
     fetch(endpoint,{
         method: "PUT",
