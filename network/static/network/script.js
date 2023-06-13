@@ -111,7 +111,7 @@ function getFollowing(){
     fetch("/following")
     .then(response => response.json())
     .then(results => {
-        // console.log(results)
+        console.log(results)
         displayPosts(results);
     })
 }
